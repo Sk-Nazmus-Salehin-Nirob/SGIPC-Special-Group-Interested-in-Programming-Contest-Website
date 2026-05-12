@@ -1,0 +1,67 @@
+@model SGIPC_final.Models.JoinViewModel
+@{
+    ViewData["Title"] = "Join SGIPC";
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-hero-title">Join <span class="gradient-text">SGIPC KUET</span></h1>
+        <p class="page-hero-subtitle">Become part of KUET's premier competitive programming community</p>
+    </div>
+</section>
+
+<section class="join-section">
+    <div class="container">
+        <div class="join-card">
+            <div class="join-card-header">
+                <span class="join-icon">🚀</span>
+                <h2>Member Registration</h2>
+                <p>Fill in the form below and we will get in touch with you shortly.</p>
+            </div>
+
+            <!-- ASP.NET MVC Form with Tag Helpers & Anti-Forgery Token -->
+            <form asp-controller="Home" asp-action="Join" method="post" class="join-form" novalidate>
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label asp-for="FullName" class="form-label"></label>
+                    <input asp-for="FullName"
+                           class="form-control"
+                           placeholder="e.g. Md. Rahim Uddin"
+                           autocomplete="name" />
+                    <span asp-validation-for="FullName" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email"
+                           class="form-control"
+                           placeholder="e.g. rahim@student.kuet.ac.bd"
+                           autocomplete="email" />
+                    <span asp-validation-for="Email" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ExperienceLevel" class="form-label"></label>
+                    <select asp-for="ExperienceLevel" class="form-control">
+                        <option value="">-- Select your level --</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                    <span asp-validation-for="ExperienceLevel" class="field-validation-error"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">Join Now</button>
+            </form>
+
+            <div class="join-back">
+                <a asp-controller="Home" asp-action="Index">&larr; Back to Home</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

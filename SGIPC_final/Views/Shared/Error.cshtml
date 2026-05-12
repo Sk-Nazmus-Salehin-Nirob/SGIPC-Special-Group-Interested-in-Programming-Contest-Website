@@ -1,0 +1,33 @@
+@model SGIPC_final.Models.ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-hero-title" style="color:#f87171;">Oops! Something went wrong.</h1>
+        <p class="page-hero-subtitle">An unexpected error occurred while processing your request.</p>
+    </div>
+</section>
+
+<section class="confirmation-section">
+    <div class="container">
+        <div class="confirmation-card">
+            <div class="confirmation-icon" style="background:linear-gradient(135deg,#ef4444,#b91c1c);">!</div>
+            <h2>Error</h2>
+            @if (Model.ShowRequestId)
+            {
+                <p>
+                    <strong>Request ID:</strong>
+                    <code style="background:rgba(99,102,241,0.1);padding:2px 6px;border-radius:4px;font-size:0.85rem;">@Model.RequestId</code>
+                </p>
+            }
+            <p class="confirmation-note">
+                Please try again. If the problem persists, contact the administrator.
+            </p>
+            <div class="confirmation-actions">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Go to Home</a>
+            </div>
+        </div>
+    </div>
+</section>

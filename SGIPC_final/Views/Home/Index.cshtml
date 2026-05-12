@@ -1,0 +1,123 @@
+@model SGIPC_final.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- ======================== HERO SECTION ======================== -->
+<section class="hero" id="home">
+    <div class="hero-bg-orb orb-1"></div>
+    <div class="hero-bg-orb orb-2"></div>
+    <div class="hero-content container">
+        <span class="hero-badge">🏅 KUET Competitive Programming</span>
+        <h1 class="hero-title">Welcome to <span class="gradient-text">SGIPC</span></h1>
+        <p class="hero-subtitle">Master Competitive Programming</p>
+        <p class="hero-description">
+            Join the Special Group Interested in Programming Contest at KUET.
+            Connect with passionate programmers, compete in contests, and master algorithms together.
+        </p>
+        <div class="hero-actions">
+            <a asp-controller="Home" asp-action="Join" class="btn btn-primary">Get Started</a>
+            <a asp-controller="Home" asp-action="About" class="btn btn-outline">Learn More</a>
+        </div>
+    </div>
+</section>
+
+<!-- ======================== STATS STRIP ======================== -->
+<section class="stats-strip">
+    <div class="container">
+        <div class="stats-grid">
+            @foreach (var stat in Model.Stats)
+            {
+                <div class="stat-item">
+                    <h3 class="stat-value">@stat.Value</h3>
+                    <p class="stat-label">@stat.Label</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ======================== ABOUT SECTION ======================== -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="section-header">
+            <h2>About <span class="gradient-text">SGIPC</span></h2>
+            <div class="section-line"></div>
+            <p class="section-subtitle">Empowering programmers to reach their full potential</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-left">
+                <h3>Who We Are</h3>
+                <p>
+                    SGIPC is a vibrant community dedicated to competitive programming excellence.
+                    We foster a culture of continuous learning, collaboration, and innovation among
+                    the brightest minds at KUET.
+                </p>
+
+                <div class="features-grid">
+                    @foreach (var feature in Model.Features)
+                    {
+                        <div class="feature-item">
+                            <span class="feature-icon">&#10003;</span>
+                            <span class="feature-text">@feature</span>
+                        </div>
+                    }
+                </div>
+
+                <div class="about-actions">
+                    <a asp-controller="Home" asp-action="About" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+
+            <div class="about-right">
+                <div class="stats-box">
+                    @foreach (var stat in Model.Stats)
+                    {
+                        <div class="stat-card">
+                            <h4 class="stat-card-value">@stat.Value</h4>
+                            <p class="stat-card-label">@stat.Label</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ======================== ACTIVITIES SECTION ======================== -->
+<section class="activities" id="activities">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our <span class="gradient-text">Activities</span></h2>
+            <div class="section-line"></div>
+            <p class="section-subtitle">What we do at SGIPC KUET</p>
+        </div>
+
+        <div class="activities-grid">
+            @foreach (var activity in Model.Activities)
+            {
+                <div class="activity-card">
+                    <div class="card-icon-wrapper">
+                        <span class="card-icon">@activity.Icon</span>
+                    </div>
+                    <h3>@activity.Title</h3>
+                    <p>@activity.Description</p>
+                    <a asp-controller="Home" asp-action="Activities" class="card-link">Learn more &rarr;</a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ======================== CTA / JOIN SECTION ======================== -->
+<section class="cta-section" id="join">
+    <div class="container">
+        <div class="cta-content">
+            <span class="cta-badge">Be Part of Something Great</span>
+            <h2>Ready to <span class="gradient-text">Join Us?</span></h2>
+            <p>Start your competitive programming journey with SGIPC KUET today.</p>
+            <a asp-controller="Home" asp-action="Join" class="btn btn-secondary">Join Community</a>
+        </div>
+    </div>
+</section>

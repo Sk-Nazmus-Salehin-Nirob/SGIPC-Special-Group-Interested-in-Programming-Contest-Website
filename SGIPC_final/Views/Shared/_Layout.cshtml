@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SGIPC KUET – Special Group Interested in Programming Contest at Khulna University of Engineering & Technology." />
+    <title>@ViewData["Title"] - SGIPC KUET</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Site CSS (wwwroot/css/site.css) -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <!-- ======================== NAVBAR ======================== -->
+    <nav class="navbar" id="mainNav">
+        <div class="navbar-content">
+            <div class="logo-section">
+                <a asp-controller="Home" asp-action="Index" class="logo-link">
+                    <span class="logo">SGIPC</span>
+                    <span class="logo-badge">KUET</span>
+                </a>
+            </div>
+
+            <!-- Desktop navigation using ASP.NET Tag Helpers for URL generation -->
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="About" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Activities" class="nav-link">Activities</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Join" class="nav-link nav-cta">Join Us</a>
+                </li>
+            </ul>
+
+            <!-- Hamburger for mobile -->
+            <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ======================== PAGE CONTENT ======================== -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- ======================== FOOTER ======================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>SGIPC KUET</h4>
+                    <p>Special Group Interested in Programming Contest at KUET, Khulna, Bangladesh.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-controller="Home" asp-action="Activities">Activities</a></li>
+                        <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Get Involved</h4>
+                    <ul>
+                        <li><a asp-controller="Home" asp-action="Join">Join Community</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Location</h4>
+                    <p>KUET, Khulna, Bangladesh</p>
+                    <p class="footer-email">sgipc&#64;kuet.ac.bd</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; @DateTime.Now.Year SGIPC KUET. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll-to-top button -->
+    <button class="scroll-to-top" id="scrollToTopBtn" aria-label="Scroll to top">&#8679;</button>
+
+    <!-- Scripts (jQuery from lib, then site.js) -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

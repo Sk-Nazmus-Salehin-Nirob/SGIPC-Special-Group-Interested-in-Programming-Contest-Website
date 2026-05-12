@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Registration Successful";
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-hero-title">You're <span class="gradient-text">In!</span></h1>
+        <p class="page-hero-subtitle">Welcome to the SGIPC KUET family</p>
+    </div>
+</section>
+
+<section class="confirmation-section">
+    <div class="container">
+        <div class="confirmation-card">
+            <div class="confirmation-icon">&#10003;</div>
+            <h2>Registration Successful!</h2>
+            @if (TempData["SuccessName"] != null)
+            {
+                <p>
+                    Welcome, <strong>@TempData["SuccessName"]</strong>! We will contact you
+                    at <strong>@TempData["SuccessEmail"]</strong> very soon.
+                </p>
+            }
+            <p class="confirmation-note">
+                In the meantime, explore our upcoming contests and workshop sessions.
+            </p>
+            <div class="confirmation-actions">
+                <a asp-controller="Home" asp-action="Activities" class="btn btn-primary">View Activities</a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</section>

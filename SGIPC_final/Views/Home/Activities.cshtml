@@ -1,0 +1,33 @@
+@model IEnumerable<SGIPC_final.Models.ActivityModel>
+@{
+    ViewData["Title"] = "Activities";
+}
+
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-hero-title">Our <span class="gradient-text">Activities</span></h1>
+        <p class="page-hero-subtitle">Everything we do at SGIPC KUET</p>
+    </div>
+</section>
+
+<section class="activities-page">
+    <div class="container">
+        <div class="activities-page-grid">
+            @foreach (var activity in Model)
+            {
+                <div class="activity-card activity-card-lg">
+                    <div class="card-icon-wrapper">
+                        <span class="card-icon">@activity.Icon</span>
+                    </div>
+                    <h3>@activity.Title</h3>
+                    <p>@activity.Description</p>
+                </div>
+            }
+        </div>
+
+        <div class="activities-cta">
+            <a asp-controller="Home" asp-action="Join" class="btn btn-primary">Join &amp; Participate</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline">Back to Home</a>
+        </div>
+    </div>
+</section>
