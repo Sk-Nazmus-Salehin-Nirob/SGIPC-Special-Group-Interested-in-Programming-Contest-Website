@@ -1,0 +1,99 @@
+@model SGIPC_final.Models.AppUser
+@{
+    ViewData["Title"] = "My Dashboard – SGIPC KUET";
+    var successMsg = TempData["RegisterSuccess"] as string;
+}
+
+<!-- ======================== USER DASHBOARD ======================== -->
+<div class="dashboard-page">
+    <div class="dashboard-hero">
+        <div class="dashboard-bg-orb orb-1"></div>
+        <div class="dashboard-bg-orb orb-2"></div>
+        <div class="container">
+            @if (!string.IsNullOrEmpty(successMsg))
+            {
+                <div class="auth-alert auth-alert-success mb-2">
+                    🎉 @successMsg
+                </div>
+            }
+            <div class="dashboard-welcome">
+                <div class="dashboard-avatar">
+                    @Model.FullName[0].ToString().ToUpper()
+                </div>
+                <div class="dashboard-welcome-text">
+                    <h1 class="dashboard-greeting">
+                        Welcome back, <span class="gradient-text">@Model.FullName</span>!
+                    </h1>
+                    <p class="dashboard-role-badge">
+                        <span class="role-pill">👤 Member</span>
+                        <span class="join-date">Joined @Model.CreatedAt.ToString("MMMM yyyy")</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats / Info cards -->
+    <div class="container dashboard-content">
+        <div class="dashboard-grid">
+
+            <div class="dash-card">
+                <div class="dash-card-icon">📧</div>
+                <div class="dash-card-body">
+                    <h3>Email</h3>
+                    <p>@Model.Email</p>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card-icon">📅</div>
+                <div class="dash-card-body">
+                    <h3>Member Since</h3>
+                    <p>@Model.CreatedAt.ToString("dd MMMM yyyy")</p>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card-icon">✅</div>
+                <div class="dash-card-body">
+                    <h3>Account Status</h3>
+                    <p class="@(Model.IsActive ? "status-active" : "status-inactive")">
+                        @(Model.IsActive ? "Active" : "Inactive")
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick links -->
+        <div class="dashboard-section">
+            <h2 class="dashboard-section-title">Explore <span class="gradient-text">SGIPC</span></h2>
+            <div class="section-line"></div>
+            <div class="dashboard-links">
+                <a asp-controller="Home" asp-action="Activities" class="dash-link-card">
+                    <span class="dash-link-icon">🏆</span>
+                    <span>Contests &amp; Activities</span>
+                </a>
+                <a asp-controller="Home" asp-action="About" class="dash-link-card">
+                    <span class="dash-link-icon">📚</span>
+                    <span>About SGIPC</span>
+                </a>
+                <a asp-controller="Home" asp-action="Contact" class="dash-link-card">
+                    <span class="dash-link-icon">💬</span>
+                    <span>Contact Us</span>
+                </a>
+                <a asp-controller="Home" asp-action="Index" class="dash-link-card">
+                    <span class="dash-link-icon">🏠</span>
+                    <span>Home</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Logout -->
+        <div class="dashboard-logout">
+            <form asp-action="Logout" asp-controller="Auth" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-outline">Sign Out</button>
+            </form>
+        </div>
+    </div>
+</div>

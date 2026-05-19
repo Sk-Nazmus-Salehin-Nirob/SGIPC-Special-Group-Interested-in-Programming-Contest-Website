@@ -40,8 +40,49 @@
                     <a asp-controller="Home" asp-action="Contact" class="nav-link">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Home" asp-action="Join" class="nav-link nav-cta">Join Us</a>
+                    <a asp-controller="Home" asp-action="Join" class="nav-link">Join Us</a>
                 </li>
+
+                @{
+                    var sessionRole = Context.Session.GetString("UserRole");
+                    var sessionName = Context.Session.GetString("UserName");
+                    bool isLoggedIn = !string.IsNullOrEmpty(sessionRole);
+                }
+
+                @if (!isLoggedIn)
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Auth" asp-action="Login" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Auth" asp-action="Register" class="nav-link nav-cta">Sign Up</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item nav-user-info">
+                        <span class="nav-user-chip">
+                            @if (sessionRole == "Admin") { <span>🛡️</span> } else { <span>👤</span> }
+                            @sessionName
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        @if (sessionRole == "Admin")
+                        {
+                            <a asp-controller="Admin" asp-action="Dashboard" class="nav-link">Dashboard</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Auth" asp-action="UserDashboard" class="nav-link">Dashboard</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        <form asp-action="Logout" asp-controller="Auth" method="post" style="margin:0">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="nav-link nav-logout-btn">Logout</button>
+                        </form>
+                    </li>
+                }
             </ul>
 
             <!-- Hamburger for mobile -->

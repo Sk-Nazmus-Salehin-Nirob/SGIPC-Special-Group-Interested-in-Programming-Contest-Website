@@ -1,0 +1,129 @@
+@model SGIPC_final.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Sign Up – SGIPC KUET";
+}
+
+<div class="auth-page">
+    <div class="auth-bg-orb orb-1"></div>
+    <div class="auth-bg-orb orb-2"></div>
+
+    <div class="auth-container">
+        <div class="auth-card auth-card-wide">
+
+            <!-- Header -->
+            <div class="auth-card-header">
+                <div class="auth-logo">
+                    <span class="auth-logo-text">SGIPC</span>
+                    <span class="auth-logo-badge">KUET</span>
+                </div>
+                <h1 class="auth-title">Join the Community</h1>
+                <p class="auth-subtitle">Create your free SGIPC account</p>
+            </div>
+
+            <!-- Global error -->
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+            {
+                <div class="auth-alert auth-alert-error">
+                    @Html.ValidationSummary(true)
+                </div>
+            }
+
+            <!-- Form -->
+            <form asp-action="Register" asp-controller="Auth" method="post" class="auth-form" id="registerForm">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label asp-for="FullName" class="form-label">Full Name</label>
+                    <div class="input-icon-wrap">
+                        <span class="input-icon">👤</span>
+                        <input asp-for="FullName" class="form-control form-control-icon"
+                               placeholder="Your full name" autocomplete="name" />
+                    </div>
+                    <span asp-validation-for="FullName" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <div class="input-icon-wrap">
+                        <span class="input-icon">✉️</span>
+                        <input asp-for="Email" class="form-control form-control-icon"
+                               type="email" placeholder="you@example.com" autocomplete="email" />
+                    </div>
+                    <span asp-validation-for="Email" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <div class="input-icon-wrap">
+                        <span class="input-icon">🔒</span>
+                        <input asp-for="Password" class="form-control form-control-icon"
+                               type="password" placeholder="Min. 6 characters" id="pwdNew"
+                               autocomplete="new-password" oninput="checkStrength(this.value)" />
+                        <button type="button" class="pwd-toggle" onclick="togglePwd('pwdNew')" title="Show/hide">👁</button>
+                    </div>
+                    <!-- Password strength bar -->
+                    <div class="pwd-strength-bar" id="strengthBar">
+                        <div class="pwd-strength-fill" id="strengthFill"></div>
+                    </div>
+                    <span class="pwd-strength-label" id="strengthLabel"></span>
+                    <span asp-validation-for="Password" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                    <div class="input-icon-wrap">
+                        <span class="input-icon">🔒</span>
+                        <input asp-for="ConfirmPassword" class="form-control form-control-icon"
+                               type="password" placeholder="Repeat password" id="pwdConfirm"
+                               autocomplete="new-password" />
+                        <button type="button" class="pwd-toggle" onclick="togglePwd('pwdConfirm')" title="Show/hide">👁</button>
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="field-validation-error"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full auth-submit" id="registerBtn">
+                    🚀 Create Account
+                </button>
+            </form>
+
+            <div class="auth-card-footer">
+                <p>Already have an account? <a asp-action="Login" asp-controller="Auth" class="auth-link">Sign in</a></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    function togglePwd(id) {
+        const el = document.getElementById(id);
+        el.type = el.type === 'password' ? 'text' : 'password';
+    }
+
+    function checkStrength(val) {
+        let score = 0;
+        if (val.length >= 6)  score++;
+        if (val.length >= 10) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+
+        const fill  = document.getElementById('strengthFill');
+        const label = document.getElementById('strengthLabel');
+        const colors = ['#ef4444','#f97316','#eab308','#22c55e','#16a34a'];
+        const labels = ['Very Weak','Weak','Fair','Strong','Very Strong'];
+
+        fill.style.width  = (score * 20) + '%';
+        fill.style.background = colors[score - 1] || '#ef4444';
+        label.textContent = val.length ? labels[score - 1] || 'Very Weak' : '';
+        label.style.color = colors[score - 1] || '#ef4444';
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', function() {
+        const btn = document.getElementById('registerBtn');
+        btn.textContent = 'Creating account…';
+        btn.disabled = true;
+    });
+</script>
+}

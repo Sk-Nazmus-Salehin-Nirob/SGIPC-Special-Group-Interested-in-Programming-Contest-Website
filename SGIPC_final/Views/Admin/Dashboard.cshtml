@@ -1,0 +1,128 @@
+@model List<SGIPC_final.Models.AppUser>
+@{
+    ViewData["Title"] = "Admin Dashboard – SGIPC KUET";
+    int totalUsers  = (int)(ViewBag.TotalUsers  ?? 0);
+    int activeUsers = (int)(ViewBag.ActiveUsers ?? 0);
+    string adminName = ViewBag.AdminName ?? "Admin";
+}
+
+<!-- ======================== ADMIN DASHBOARD ======================== -->
+<div class="dashboard-page">
+    <div class="dashboard-hero admin-hero">
+        <div class="dashboard-bg-orb orb-1"></div>
+        <div class="dashboard-bg-orb orb-2"></div>
+        <div class="container">
+            <div class="dashboard-welcome">
+                <div class="dashboard-avatar admin-avatar">🛡️</div>
+                <div class="dashboard-welcome-text">
+                    <h1 class="dashboard-greeting">
+                        Admin Panel, <span class="gradient-text">@adminName</span>
+                    </h1>
+                    <p class="dashboard-role-badge">
+                        <span class="role-pill admin-pill">🛡️ Administrator</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container dashboard-content">
+
+        <!-- Stat cards -->
+        <div class="admin-stats-row">
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon">👥</div>
+                <div>
+                    <div class="admin-stat-value">@totalUsers</div>
+                    <div class="admin-stat-label">Total Users</div>
+                </div>
+            </div>
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon">✅</div>
+                <div>
+                    <div class="admin-stat-value">@activeUsers</div>
+                    <div class="admin-stat-label">Active Users</div>
+                </div>
+            </div>
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon">🚫</div>
+                <div>
+                    <div class="admin-stat-value">@(totalUsers - activeUsers)</div>
+                    <div class="admin-stat-label">Inactive Users</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User table -->
+        <div class="admin-table-card">
+            <div class="admin-table-header">
+                <h2>Registered Members</h2>
+                <span class="admin-table-count">@totalUsers user(s)</span>
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="admin-empty">
+                    <span>🙅</span>
+                    <p>No registered users yet.</p>
+                </div>
+            }
+            else
+            {
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Joined</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var (user, i) in Model.Select((u, idx) => (u, idx + 1)))
+                            {
+                                <tr class="@(user.IsActive ? "" : "row-inactive")">
+                                    <td>@i</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <div class="user-avatar-sm">@user.FullName[0]</div>
+                                            @user.FullName
+                                        </div>
+                                    </td>
+                                    <td>@user.Email</td>
+                                    <td>@user.CreatedAt.ToString("dd MMM yyyy")</td>
+                                    <td>
+                                        <span class="status-badge @(user.IsActive ? "status-active-badge" : "status-inactive-badge")">
+                                            @(user.IsActive ? "Active" : "Inactive")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <form asp-action="ToggleUser" asp-controller="Admin"
+                                              asp-route-id="@user.Id" method="post" style="display:inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit"
+                                                    class="btn-toggle @(user.IsActive ? "btn-toggle-disable" : "btn-toggle-enable")">
+                                                @(user.IsActive ? "Disable" : "Enable")
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+        <!-- Logout -->
+        <div class="dashboard-logout">
+            <form asp-action="Logout" asp-controller="Auth" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-outline">Sign Out</button>
+            </form>
+        </div>
+    </div>
+</div>

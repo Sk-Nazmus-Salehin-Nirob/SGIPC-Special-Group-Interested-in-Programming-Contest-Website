@@ -1,0 +1,121 @@
+@model SGIPC_final.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login – SGIPC KUET";
+    var activeTab = Model.Role == "Admin" ? "admin" : "user";
+}
+
+<div class="auth-page">
+    <div class="auth-bg-orb orb-1"></div>
+    <div class="auth-bg-orb orb-2"></div>
+
+    <div class="auth-container">
+        <div class="auth-card">
+
+            <!-- Header -->
+            <div class="auth-card-header">
+                <div class="auth-logo">
+                    <span class="auth-logo-text">SGIPC</span>
+                    <span class="auth-logo-badge">KUET</span>
+                </div>
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to your account</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="tab-btn @(activeTab == "user" ? "active" : "")"
+                        id="tabUser" type="button" onclick="switchTab('user')">
+                    👤 User Login
+                </button>
+                <button class="tab-btn @(activeTab == "admin" ? "active" : "")"
+                        id="tabAdmin" type="button" onclick="switchTab('admin')">
+                    🛡️ Admin Login
+                </button>
+            </div>
+
+            <!-- Global error -->
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="auth-alert auth-alert-error">
+                    @Html.ValidationSummary(true, "", new { @class = "" })
+                </div>
+            }
+
+            <!-- Form -->
+            <form asp-action="Login" asp-controller="Auth" method="post" class="auth-form" id="loginForm">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Role" id="roleField" value="@activeTab" />
+
+                <div class="form-group">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <div class="input-icon-wrap">
+                        <span class="input-icon">✉️</span>
+                        <input asp-for="Email" class="form-control form-control-icon"
+                               type="email" placeholder="you@example.com" autocomplete="email" />
+                    </div>
+                    <span asp-validation-for="Email" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <div class="input-icon-wrap">
+                        <span class="input-icon">🔒</span>
+                        <input asp-for="Password" class="form-control form-control-icon"
+                               type="password" placeholder="••••••••" autocomplete="current-password" id="pwdInput" />
+                        <button type="button" class="pwd-toggle" onclick="togglePassword()" title="Show/hide password">👁</button>
+                    </div>
+                    <span asp-validation-for="Password" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-check-row">
+                    <label class="form-check">
+                        <input asp-for="RememberMe" type="checkbox" class="form-checkbox" />
+                        <span>Remember me</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full auth-submit" id="loginBtn">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="auth-card-footer">
+                <p id="footerText">
+                    Don't have an account?
+                    <a asp-action="Register" asp-controller="Auth" class="auth-link">Create one free</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    function switchTab(tab) {
+        document.getElementById('roleField').value = tab;
+
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tab === 'user' ? 'tabUser' : 'tabAdmin').classList.add('active');
+
+        const footer = document.getElementById('footerText');
+        if (tab === 'admin') {
+            footer.innerHTML = 'Having trouble? Contact <a href="mailto:admin@sgipc.kuet.ac.bd" class="auth-link">admin@sgipc.kuet.ac.bd</a>';
+        } else {
+            footer.innerHTML = 'Don\'t have an account? <a href="/Auth/Register" class="auth-link">Create one free</a>';
+        }
+    }
+
+    function togglePassword() {
+        const input = document.getElementById('pwdInput');
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function() {
+        const btn = document.getElementById('loginBtn');
+        btn.textContent = 'Signing in…';
+        btn.disabled = true;
+    });
+</script>
+}
