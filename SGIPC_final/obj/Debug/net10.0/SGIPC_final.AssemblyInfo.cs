@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SGIPC_final")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07d3aac3ccb8f79f074bc09dec2c38052dfcee71")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c5c05e3ef72df4a17f4e7d7abfab819aabf401f")]
 [assembly: System.Reflection.AssemblyProductAttribute("SGIPC_final")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SGIPC_final")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
